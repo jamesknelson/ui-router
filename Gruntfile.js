@@ -6,7 +6,7 @@ module.exports = function (grunt) {
 
   // Project configuration.
   grunt.initConfig({
-    builddir: 'build',
+    builddir: 'release',
     pkg: grunt.file.readJSON('package.json'),
     buildtag: '-dev-' + grunt.template.today('yyyy-mm-dd'),
     meta: {
