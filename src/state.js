@@ -884,15 +884,6 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
           exiting.locals = null;
         }
 
-        // Enter 'to' states not kept
-        for (l = keep; l < toPath.length; l++) {
-          entering = toPath[l];
-          entering.locals = toLocals[l];
-          if (entering.self.onEnter) {
-            $injector.invoke(entering.self.onEnter, entering.self, entering.locals.globals);
-          }
-        }
-
         // Run it again, to catch any transitions in callbacks
         if ($state.transition !== transition) return TransitionSuperseded;
 
@@ -902,6 +893,15 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
         $state.params = toParams;
         copy($state.params, $stateParams);
         $state.transition = null;
+
+        // Enter 'to' states not kept
+        for (l = keep; l < toPath.length; l++) {
+          entering = toPath[l];
+          entering.locals = toLocals[l];
+          if (entering.self.onEnter) {
+            $injector.invoke(entering.self.onEnter, entering.self, entering.locals.globals);
+          }
+        }
 
         if (options.location && to.navigable) {
           $urlRouter.push(to.navigable.url, to.navigable.locals.globals.$stateParams, {
